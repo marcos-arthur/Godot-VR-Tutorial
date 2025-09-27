@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://coyku6mt4dpob"]
 
 [ext_resource type="Script" uid="uid://dbyltyxniqxm5" path="res://scenes/base_scene/base_scene.gd" id="1_57xsf"]
-[ext_resource type="PackedScene" uid="uid://dhmr6f84m60s7" path="res://components/floor/floor.tscn" id="2_6jpig"]
+[ext_resource type="PackedScene" uid="uid://dhmr6f84m60s7" path="res://components/World/world.tscn" id="2_6jpig"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_57xsf"]
 

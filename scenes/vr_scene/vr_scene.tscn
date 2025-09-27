@@ -1,35 +1,75 @@
-[gd_scene load_steps=6 format=3 uid="uid://be8f2alh03l4t"]
+[gd_scene load_steps=13 format=3 uid="uid://be8f2alh03l4t"]
 
-[ext_resource type="PackedScene" uid="uid://dhmr6f84m60s7" path="res://components/floor/floor.tscn" id="1_4047n"]
+[ext_resource type="PackedScene" uid="uid://dhmr6f84m60s7" path="res://components/World/world.tscn" id="1_4047n"]
+[ext_resource type="Script" uid="uid://cwpnhbyicg8tg" path="res://addons/godot-xr-tools/xr/start_xr.gd" id="1_m7g76"]
 [ext_resource type="PackedScene" uid="uid://b4kad2kuba1yn" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_hand_low.tscn" id="2_j6rbt"]
 [ext_resource type="PackedScene" uid="uid://l2n30mpbkdyw" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="3_36jri"]
 [ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="4_36jri"]
+[ext_resource type="PackedScene" uid="uid://fiul51tsyoop" path="res://addons/godot-xr-tools/functions/function_teleport.tscn" id="4_steyl"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="5_00ibf"]
+[ext_resource type="Script" uid="uid://byui6bvwjyv3f" path="res://addons/godot-xr-tools/functions/function_pickup.gd" id="6_6khyu"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="7_00ibf"]
+[ext_resource type="PackedScene" uid="uid://bh5t36kl3673r" path="res://scenes/Cube/cube.tscn" id="9_o480u"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m7g76"]
+[sub_resource type="BoxMesh" id="BoxMesh_6khyu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pbvol"]
 
 [node name="VrScene" type="Node3D"]
+script = ExtResource("1_m7g76")
 
 [node name="Floor" parent="." instance=ExtResource("1_4047n")]
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.304345, 0.816888)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.817)
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="LeftHand" type="XRController3D" parent="XROrigin3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -1)
 tracker = &"left_hand"
 
 [node name="LeftHand" parent="XROrigin3D/LeftHand" instance=ExtResource("2_j6rbt")]
 
+[node name="FunctionTeleport" parent="XROrigin3D/LeftHand" instance=ExtResource("4_steyl")]
+
+[node name="MovementDirect" parent="XROrigin3D/LeftHand" instance=ExtResource("5_00ibf")]
+
+[node name="XRToolsFunctionPickup" type="Node3D" parent="XROrigin3D/LeftHand"]
+script = ExtResource("6_6khyu")
+metadata/_custom_type_script = "uid://byui6bvwjyv3f"
+
 [node name="RightHand" type="XRController3D" parent="XROrigin3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -1)
 tracker = &"right_hand"
 
 [node name="RightHand" parent="XROrigin3D/RightHand" instance=ExtResource("3_36jri")]
 
-[node name="PlayerBody" parent="XROrigin3D" instance=ExtResource("4_36jri")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+[node name="MovementTurn" parent="XROrigin3D/RightHand" instance=ExtResource("7_00ibf")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/PlayerBody"]
-shape = SubResource("CapsuleShape3D_m7g76")
+[node name="XRToolsFunctionPickup" type="Node3D" parent="XROrigin3D/RightHand"]
+script = ExtResource("6_6khyu")
+metadata/_custom_type_script = "uid://byui6bvwjyv3f"
+
+[node name="PlayerBody" parent="XROrigin3D" instance=ExtResource("4_36jri")]
+
+[node name="Table" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91649, -0.772917)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
+mesh = SubResource("BoxMesh_6khyu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Table"]
+shape = SubResource("BoxShape3D_pbvol")
+
+[node name="Cubes" type="Node3D" parent="."]
+
+[node name="Cube" parent="Cubes" instance=ExtResource("9_o480u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.159673, 1.48859, -0.649109)
+
+[node name="Cube2" parent="Cubes" instance=ExtResource("9_o480u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0117486, 1.48859, -0.649109)
+
+[node name="Cube3" parent="Cubes" instance=ExtResource("9_o480u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.248976, 1.48859, -0.649109)

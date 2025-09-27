@@ -52,3 +52,4 @@ renderer/rendering_method.mobile="gl_compatibility"
 
 openxr/enabled=true
 shaders/enabled=true
+hybrid_app/enabled=true

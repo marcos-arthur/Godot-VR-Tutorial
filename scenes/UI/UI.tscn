@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://igolj4xjlxm3"]
+
+[ext_resource type="Script" uid="uid://b06od5awweyqv" path="res://scenes/UI/ui.gd" id="1_0wsoe"]
+[ext_resource type="Shader" uid="uid://dhhhmksa7da1h" path="res://cursor.gdshader" id="2_n6wm8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0wsoe"]
+shader = ExtResource("2_n6wm8")
+shader_parameter/color = Color(1, 1, 1, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_0wsoe")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 512.0
+color = Color(0.364706, 0.811765, 0.768627, 0.470588)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 199.0
+offset_top = 234.0
+offset_right = 244.0
+offset_bottom = 257.0
+theme_override_font_sizes/font_size = 28
+text = "TESTE"
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 131.0
+offset_right = 252.0
+offset_bottom = 162.0
+text = "Play"
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 211.0
+offset_top = 190.0
+offset_right = 248.0
+offset_bottom = 221.0
+text = "Exit
+"
+
+[node name="Cursor" type="ColorRect" parent="."]
+process_mode = 4
+material = SubResource("ShaderMaterial_0wsoe")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

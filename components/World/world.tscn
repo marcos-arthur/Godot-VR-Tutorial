@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://dhmr6f84m60s7"]
+
+[ext_resource type="Script" uid="uid://dkxxtomyyupth" path="res://components/World/world.gd" id="1_oo7mk"]
+[ext_resource type="Texture2D" uid="uid://cr6u4k5mwfsa5" path="res://addons/kenney_prototype_textures/orange/texture_01.png" id="2_46xyf"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7s3pt"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_qcxwf"]
+sky_material = SubResource("ProceduralSkyMaterial_7s3pt")
+
+[sub_resource type="Environment" id="Environment_oo7mk"]
+background_mode = 2
+sky = SubResource("Sky_qcxwf")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_utjr8"]
+albedo_texture = ExtResource("2_46xyf")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wr78r"]
+size = Vector2(1000, 1000)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_utjr8"]
+size = Vector3(1000, 0.1, 1000)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_oo7mk")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_oo7mk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+light_energy = 0.1
+shadow_enabled = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+material_override = SubResource("StandardMaterial3D_utjr8")
+mesh = SubResource("PlaneMesh_wr78r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_utjr8")

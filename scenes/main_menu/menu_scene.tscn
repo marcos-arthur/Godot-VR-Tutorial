@@ -1,0 +1,75 @@
+[gd_scene load_steps=12 format=3 uid="uid://dejbptcfkyddp"]
+
+[ext_resource type="Script" uid="uid://22l4ojsafnnx" path="res://scenes/main_menu/menu_scene.gd" id="1_leo8a"]
+[ext_resource type="Script" uid="uid://cwpnhbyicg8tg" path="res://addons/godot-xr-tools/xr/start_xr.gd" id="1_tnwh3"]
+[ext_resource type="PackedScene" uid="uid://dhmr6f84m60s7" path="res://components/World/world.tscn" id="2_8khnf"]
+[ext_resource type="Texture2D" uid="uid://lxjkpyj650if" path="res://addons/kenney_prototype_textures/purple/texture_01.png" id="3_8khnf"]
+[ext_resource type="PackedScene" uid="uid://b4kad2kuba1yn" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_hand_low.tscn" id="3_15w72"]
+[ext_resource type="PackedScene" uid="uid://0c3e4rxdjshr" path="res://components/Pointer/pointer.tscn" id="6_14nid"]
+[ext_resource type="Script" uid="uid://csb3l8fr2c2r7" path="res://scenes/main_menu/handle_menu.gd" id="7_fxqib"]
+[ext_resource type="PackedScene" uid="uid://l2n30mpbkdyw" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="7_p64l2"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="9_08wyq"]
+[ext_resource type="PackedScene" uid="uid://igolj4xjlxm3" path="res://scenes/UI/UI.tscn" id="11_soch7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_15w72"]
+albedo_texture = ExtResource("3_8khnf")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[node name="VrScene" type="Node3D"]
+script = ExtResource("1_leo8a")
+
+[node name="XRToolsStartXR" type="Node" parent="."]
+script = ExtResource("1_tnwh3")
+metadata/_custom_type_script = "uid://cwpnhbyicg8tg"
+
+[node name="World" parent="." instance=ExtResource("2_8khnf")]
+
+[node name="MeshInstance3D" parent="World/StaticBody3D" index="0"]
+material_override = SubResource("StandardMaterial3D_15w72")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.817)
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="LeftHand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -1)
+tracker = &"left_hand"
+
+[node name="LeftHand" parent="XROrigin3D/LeftHand" instance=ExtResource("3_15w72")]
+
+[node name="Pointer" parent="XROrigin3D/LeftHand" instance=ExtResource("6_14nid")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.719777)
+
+[node name="RightHand" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -1)
+tracker = &"right_hand"
+
+[node name="RightHand" parent="XROrigin3D/RightHand" instance=ExtResource("7_p64l2")]
+
+[node name="Pointer" parent="XROrigin3D/RightHand" instance=ExtResource("6_14nid")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.0419283, -0.714139)
+
+[node name="PlayerBody" parent="XROrigin3D" instance=ExtResource("9_08wyq")]
+
+[node name="OpenXRCompositionLayerQuad" type="OpenXRCompositionLayerQuad" parent="XROrigin3D" node_paths=PackedStringArray("layer_viewport", "controller")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44845, -1.46279)
+layer_viewport = NodePath("../../SubViewport")
+alpha_blend = true
+XR_FB_composition_layer_alpha_blend/enable_alpha_blend_extension = true
+script = ExtResource("7_fxqib")
+controller = NodePath("../RightHand")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+render_target_update_mode = 4
+
+[node name="Control" parent="SubViewport" instance=ExtResource("11_soch7")]
+
+[connection signal="button_pressed" from="XROrigin3D/LeftHand" to="." method="_on_left_hand_button_pressed"]
+[connection signal="button_pressed" from="XROrigin3D/RightHand" to="." method="_on_right_hand_button_pressed"]
+
+[editable path="World"]
