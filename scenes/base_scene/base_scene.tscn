@@ -1,7 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://coyku6mt4dpob"]
+[gd_scene load_steps=8 format=3 uid="uid://coyku6mt4dpob"]
 
 [ext_resource type="Script" uid="uid://dbyltyxniqxm5" path="res://scenes/base_scene/base_scene.gd" id="1_57xsf"]
 [ext_resource type="PackedScene" uid="uid://dhmr6f84m60s7" path="res://components/World/world.tscn" id="2_6jpig"]
+[ext_resource type="Texture2D" uid="uid://bqfqgxt4vpife" path="res://addons/kenney_prototype_textures/light/texture_02.png" id="3_0cwiv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uy8io"]
+albedo_texture = ExtResource("3_0cwiv")
+uv1_triplanar = true
+uv1_world_triplanar = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_57xsf"]
 
@@ -14,6 +20,9 @@ radius = 0.1
 script = ExtResource("1_57xsf")
 
 [node name="Floor" parent="." instance=ExtResource("2_6jpig")]
+
+[node name="MeshInstance3D" parent="Floor/StaticBody3D" index="0"]
+material_override = SubResource("StandardMaterial3D_uy8io")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.275106, 3)
@@ -35,3 +44,5 @@ shape = SubResource("SphereShape3D_57xsf")
 shape = SubResource("BoxShape3D_57xsf")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+
+[editable path="Floor"]

@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://csb3l8fr2c2r7" path="res://scenes/main_menu/handle_menu.gd" id="7_fxqib"]
 [ext_resource type="PackedScene" uid="uid://l2n30mpbkdyw" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="7_p64l2"]
 [ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="9_08wyq"]
-[ext_resource type="PackedScene" uid="uid://igolj4xjlxm3" path="res://scenes/UI/UI.tscn" id="11_soch7"]
+[ext_resource type="PackedScene" uid="uid://igolj4xjlxm3" path="res://scenes/ui/UI.tscn" id="11_soch7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_15w72"]
 albedo_texture = ExtResource("3_8khnf")

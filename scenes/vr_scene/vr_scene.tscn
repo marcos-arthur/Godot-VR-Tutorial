@@ -9,14 +9,17 @@
 [ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="5_00ibf"]
 [ext_resource type="Script" uid="uid://byui6bvwjyv3f" path="res://addons/godot-xr-tools/functions/function_pickup.gd" id="6_6khyu"]
 [ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="7_00ibf"]
-[ext_resource type="PackedScene" uid="uid://bh5t36kl3673r" path="res://scenes/Cube/cube.tscn" id="9_o480u"]
+[ext_resource type="PackedScene" uid="uid://bh5t36kl3673r" path="res://scenes/cube/cube.tscn" id="9_o480u"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6khyu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pbvol"]
 
 [node name="VrScene" type="Node3D"]
+
+[node name="XRToolsStartXR" type="Node" parent="."]
 script = ExtResource("1_m7g76")
+metadata/_custom_type_script = "uid://cwpnhbyicg8tg"
 
 [node name="Floor" parent="." instance=ExtResource("1_4047n")]
 
